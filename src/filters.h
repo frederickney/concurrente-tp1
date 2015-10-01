@@ -5,14 +5,13 @@
  *
  */
 typedef struct {
+  const char *name;
   const short dim;
   const float *kernel; 
 } filter_t;
 
-extern const filter_t IDENTITY_FILTER;
+#define filter_elem(filter, x, y) (filter->kernel[(x) + ((y) * filter->dim)])
 
-#define filter_elem(filter, x, y) (filter.kernel[(x) + ((y) * filter.dim)])
-
-filter_t *get_filter(const char*name);
+const filter_t *get_filter(const char *name);
 #endif // FILTERS_H
 

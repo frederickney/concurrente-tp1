@@ -14,6 +14,6 @@
 /**
  *
  */
-void convolution (img_t *output, const img_t *input, filter_t filter);
+void convolution (img_t *output, const img_t *input, const filter_t *filter);
 
 #endif // CONVOLUTION_H
