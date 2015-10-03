@@ -11,6 +11,7 @@
 
 #include "../lib/ppm.h"
 
+#include "utils.h"
 #include "filters.h"
 #include "convolution.h"
 
@@ -51,10 +52,13 @@ int main (int argc, char **argv)
 {
   char *cmd_name = argv[0];
   char *filter_name;
+  char *threads_arg;
   char *input_filename;
   char *output_filename;
 
   const filter_t *filter;
+
+  int threads;
 
   img_t *input_img;
   img_t *output_img;
@@ -67,6 +71,7 @@ int main (int argc, char **argv)
 
   // Bind arguments to meaningful variables
   filter_name = argv[1];
+  threads_arg = argv[2];
   input_filename = argv[3];
   output_filename = argv[4];
 
@@ -78,8 +83,19 @@ int main (int argc, char **argv)
     return EXIT_FAILURE;
   }
 
-  // Ensure that the input file and the output file are separate
-  // files
+  // If the thread argument is "auto" use the number of available CPUs as number
+  // of threads
+  if (strcmp(threads_arg, "auto") == 0) {
+    threads = sys_get_cpu_count();
+    printf("info: %d threads\n", threads);
+  // Otherwise try to parse the string to get a positive integer
+  } else if (!parse_int(&threads, threads_arg) || threads < 1) {
+    printf("ERROR: <thread number> must be a strictly positive integer "
+           "or 'auto'.\n");
+    return EXIT_FAILURE;
+  }
+
+  // Ensure that the input file and the output file are separate files
   if (strcmp(input_filename, output_filename) == 0) {
     printf("ERROR: The ouput file is the same as the input file.\n"
            "       Data loss could occur.\n");

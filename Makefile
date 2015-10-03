@@ -3,7 +3,7 @@ include Makefile.inc
 CFLAGS=-Wall -pedantic -std=c11
 LDFLAGS=-lrt -lpthread
 EXE=conv
-OBJ=src/convolution.o src/filters.o lib/ppm.o
+OBJ=src/convolution.o src/filters.o src/utils.o lib/ppm.o
 
 .PHONY: clean
 
