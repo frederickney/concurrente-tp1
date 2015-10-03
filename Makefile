@@ -24,4 +24,4 @@ test: src/test.o $(OBJ)
 	$(CC) $(CFLAGS) -o $@ -c $<
 
 clean:
-	rm -rf $(EXE) $(OBJ) src/test.o src/main.o
+	rm -rf $(EXE) test $(OBJ) src/test.o src/main.o
