@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <sys/stat.h>
 
 #include "utils.h"
 
@@ -29,4 +30,9 @@ bool parse_int (int *value, const char *str)
 int sys_get_cpu_count (void)
 {
   return sysconf(_SC_NPROCESSORS_ONLN);
+}
+
+bool file_exists (const char *filename) {
+  struct stat buffer;
+  return (stat(filename, &buffer) == 0);
 }

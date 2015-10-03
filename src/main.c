@@ -7,8 +7,6 @@
 #include <string.h>
 #include <stdbool.h>
 
-#include <sys/stat.h>
-
 #include "../lib/ppm.h"
 
 #include "utils.h"
@@ -33,16 +31,6 @@ void display_usage (char *cmd_name)
 {
   printf(USAGE, cmd_name);
   printf("\n%s", AVAILABLE_FILTERS);
-}
-
-/**
- * @brief Check whether the specified file exists
- *
- * @param filename
- */
-bool exists (const char *filename) {
-  struct stat buffer;
-  return (stat(filename, &buffer) == 0);
 }
 
 /**
@@ -103,7 +91,7 @@ int main (int argc, char **argv)
   }
 
   // Check whether the input file exists
-  if (!exists(input_filename)) {
+  if (!file_exists(input_filename)) {
     printf("ERROR: File '%s' not found.\n", input_filename);
     return EXIT_FAILURE;
   }

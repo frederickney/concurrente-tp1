@@ -21,4 +21,11 @@ bool parse_int (int *value, const char *str);
  */
 int sys_get_cpu_count (void);
 
+/**
+ * @brief Check whether the specified file exists
+ *
+ * @param filename
+ */
+bool file_exists (const char *filename);
+
 #endif // UTILS
