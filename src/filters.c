@@ -17,7 +17,7 @@ const filter_t IDENTITY_FILTER = {
   .kernel = IDENTITY_KERNEL
 };
 
-const filter_t *get_filter(const char *name)
+const filter_t *filters_get_by_name(const char *name)
 {
   if (strcmp(name, "identity") == 0)
     return &IDENTITY_FILTER;

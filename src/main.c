@@ -71,7 +71,7 @@ int main (int argc, char **argv)
   output_filename = argv[4];
 
   // Try to retrieve the specified filter
-  filter = get_filter(filter_name);
+  filter = filters_get_by_name(filter_name);
   if (filter == NULL) {
     printf("ERROR: Filter '%s' is not available.\n", filter_name);
     printf("\n%s", AVAILABLE_FILTERS);

@@ -10,8 +10,8 @@ typedef struct {
   const float *kernel; 
 } filter_t;
 
-#define filter_elem(filter, x, y) (filter->kernel[(x) + ((y) * filter->dim)])
+#define filter_get(filter, x, y) ((filter)->kernel[((x) * (filter)->dim) + (y)])
 
-const filter_t *get_filter(const char *name);
+const filter_t *filters_get_by_name(const char *name);
 #endif // FILTERS_H
 
