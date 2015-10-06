@@ -97,16 +97,16 @@ const filter_t *filters_get_by_name(const char *name)
 {
   if (strcmp(name, IDENTITY_FILTER->name) == 0)
       return &IDENTITY_FILTER;
-    else if (strcmp(name, SHARPEN_FILTER->name) == 0)
-      return &SHARPEN_FILTER;
-    else if (strcmp(name, BLUR_FILTER->name) == 0)
-      return &BLUR_FILTER;
-    else if (strcmp(name, EDGE_FILTER->name) == 0)
-      return &EDGE_FILTER;
-    else if (strcmp(name, GAUSS_FILTER->name) == 0)
-      return &GAUSS_FILTER;
-    else if (strcmp(name, UNSHARP_FILTER->name) == 0)
-      return &UNSHARP_FILTER;
+  else if (strcmp(name, SHARPEN_FILTER->name) == 0)
+    return &SHARPEN_FILTER;
+  else if (strcmp(name, BLUR_FILTER->name) == 0)
+    return &BLUR_FILTER;
+  else if (strcmp(name, EDGE_FILTER->name) == 0)
+    return &EDGE_FILTER;
+  else if (strcmp(name, GAUSS_FILTER->name) == 0)
+    return &GAUSS_FILTER;
+  else if (strcmp(name, UNSHARP_FILTER->name) == 0)
+    return &UNSHARP_FILTER;
   else
     return NULL;
 }
