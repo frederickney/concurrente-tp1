@@ -7,7 +7,7 @@
 typedef struct {
   const char *name;
   const short dim;
-  const float **kernel;
+  const float *kernel;
 } filter_t;
 
 #define filter_get(filter, x, y) ((filter)->kernel[((x) * (filter)->dim) + (y)])

@@ -44,7 +44,7 @@ Test(conv_utils, parse_int) {
   cr_assert_eq(value, 12);
 }
 
-Test(con_convolution, clamp) {
+Test(conv_convolution, clamp) {
   int result;
 
   result = clamp(12, 0, 100);
