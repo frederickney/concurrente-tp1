@@ -103,7 +103,7 @@ int main (int argc, char **argv)
   output_img = alloc_img(input_img->width, input_img->height);
 
   // Produce the output file by applying the specified filter on the input file
-  convolution(output_img, input_img, filter);
+  convolution(output_img, input_img, filter, threads);
 
   // Write the output file to the file system
   write_ppm(output_filename, output_img);

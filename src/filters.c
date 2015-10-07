@@ -25,11 +25,15 @@ const float SHARPEN_KERNEL[] = {
 /*
  * Global constant for the blur filter
  */
-const float BLUR_KERNEL[] = { [0 ... 8] = 1.0 / 9.0 };
+const float BLUR_KERNEL[] = {
+  1.0 / 9.0, 1.0 / 9.0, 1.0 / 9.0,
+  1.0 / 9.0, 1.0 / 9.0, 1.0 / 9.0,
+  1.0 / 9.0, 1.0 / 9.0, 1.0 / 9.0
+};
 /*
  * Global constant for the edge filter
  */
-const float EDGE_KERNEL[]] = {
+const float EDGE_KERNEL[] = {
   -1, -1, -1,
   -1, 8, -1,
   -1, -1, -1
@@ -58,38 +62,38 @@ const float UNSHARP_KERNEL[] = {
 const filter_t IDENTITY_FILTER = {
   .name = "identity",
   .dim = 3,
-  .kernel = &IDENTITY_KERNEL
+  .kernel = IDENTITY_KERNEL
 };
 
 const filter_t SHARPEN_FILTER = {
   .name = "sharpen",
   .dim = 3,
-  .kernel = &SHARPEN_KERNEL
-}
+  .kernel = SHARPEN_KERNEL
+};
 
 const filter_t BLUR_FILTER = {
   .name = "blur",
   .dim = 3,
-  .kernel = &BLUR_KERNEL
-}
+  .kernel = BLUR_KERNEL
+};
 
 const filter_t EDGE_FILTER = {
   .name = "edge",
   .dim = 3,
-  .kernel = &EDGE_KERNEL
-}
+  .kernel = EDGE_KERNEL
+};
 
 const filter_t GAUSS_FILTER = {
   .name = "gauss",
   .dim = 5,
-  .kernel = &GAUSS_KERNEL
-}
+  .kernel = GAUSS_KERNEL
+};
 
 const filter_t UNSHARP_FILTER = {
   .name = "unsharp",
   .dim = 5,
-  .kernel = &UNSHARP_KERNEL
-}
+  .kernel = UNSHARP_KERNEL
+};
 
 const filter_t *filters_get_by_name(const char *name)
 {
