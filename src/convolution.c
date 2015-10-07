@@ -8,6 +8,12 @@
 #include "../lib/ppm.h"
 #include "filter.h"
 
+void apply_filter(img_t *extended , img_t *output)
+{
+    int dif = (extend->width - output->width) / 2;
+    int i = extend->width * dif;
+}
+
 img_t *extend(img_t *input)
 {
     img_t *extend = alloc_img(input->width + 2 , input->height + 2);
@@ -24,18 +30,23 @@ img_t *extend(img_t *input)
         else if ( i > 0 && i < width)
             extend->data[i] = input->data[i - 1];   //creating the rest of the 1st pixels line extension
         else if (i % w_ext == 1 && i / w_ext > 0 && i / w_ext < h_ext)  // detecting the begin of a pixels line
-            extend->data[i] = input->data[(i / w_ext - 1) * (width - 1) + 1];   //left extension of input picture
+            extend->data[i] = input->data[(i / w_ext - 1) * width];   //left extension of input picture
         else if (i % w_ext == 0 && i / w_ext > 0 && i / w_ext < h_ext)  //detecting the end of a pixels line
-            extend->data[i] = input->data[(i / w_ext - 1) * (width - 1)];    //right extension of input picture
+            extend->data[i] = input->data[(i / w_ext - 1) * width - 1];    //right extension of input picture
         else if (i%w_ext > 0 && i%w_ext < w_ext && i/w_ext > 0 && i/w_ext < h_ext) //place to insert input picture
-            extend->data[i] = input->data[(i / w_ext - 1) * (width - 1) + i % w_ext];   //inserting the picture
+            extend->data[i] = input->data[(i / w_ext - 1) * width + i % w_ext];   //inserting the picture
         else if (i > height * w_ext)    //creating the last pixel line of extend
             extend->data[i] = extend->data[i - w_ext];  //copy of previous pixels line into last pixels line
+        else
+        {
+            printf("error\n");
+            EXIT
+        }
     }
     return extend;
 }
 
-void convolution (img_t *output, const img_t *input, const filter_t *filter, int threads = 0)
+void convolution(img_t *output, const img_t *input, const filter_t *filter, int threads = 0)
 {
     int width = input->width;
     int height =  input->height;
@@ -47,16 +58,15 @@ void convolution (img_t *output, const img_t *input, const filter_t *filter, int
 
 dim_3:
     img_t *input_ext = extend(input);
-    //TODO write convolution code
-    goto free;
+    goto filtering;
 dim_5:
     img_t *input_ext3 = extend(input)
     img_t *input_ext = extend(input_ext3);
     free(input_ext3->data);
     free(input_ext3);
-    //TODO write convolution code
-    goto free;
-free:
+    goto filtering;
+filtering:
+    apply_filter(input_ext , output);
     free(input_ext->data);
     free(input_ext);
 }
