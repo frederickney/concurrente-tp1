@@ -8,7 +8,7 @@
 #include "../lib/ppm.h"
 #include "filter.h"
 
-img_t *extend_3(img_t *input)
+img_t *extend(img_t *input)
 {
     img_t *extend = alloc_img(input->width + 2 , input->height + 2);
     int w_ext = input->width + 1;
@@ -34,7 +34,7 @@ img_t *extend_3(img_t *input)
     }
     return extend;
 }
-
+/*
 img_t *extend_5(img_t *input)
 {
     img_t *extend = alloc_img(input->width + 4 , input->height + 4);
@@ -44,7 +44,7 @@ img_t *extend_5(img_t *input)
     int width = input->width;
     return extend;
 }
-
+*/
 void convolution (img_t *output, const img_t *input, const filter_t *filter, int threads = 0)
 {
     int width = input->width;
@@ -56,7 +56,7 @@ void convolution (img_t *output, const img_t *input, const filter_t *filter, int
     else if (dim == 5) goto dim_5;
 
 dim_3:
-    img_t *input_ext3 = extend_3(input);
+    img_t *input_ext3 = extend(input);
     for (int i = 0; i < width * height; i++)
     {
         if ((i % height) == 0)
@@ -67,6 +67,6 @@ dim_3:
         else if (i % width = height - 1){}
     }
 dim_5:
-    img_t *input_ext5 = extend_5(input);
+    img_t *input_ext5 = extend(extend(input));
 
 }
