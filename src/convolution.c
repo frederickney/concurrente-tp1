@@ -46,17 +46,17 @@ void convolution (img_t *output, const img_t *input, const filter_t *filter, int
     else if (dim == 5) goto dim_5;
 
 dim_3:
-    img_t *input_ext3 = extend(input);
-    for (int i = 0; i < width * height; i++)
-    {
-        if ((i % height) == 0)
-            if ((i - height) < 0){}
-            else if (i / height != 0 && i / height < width){}
-            else if (i / height = width){}
-        else if (i % height != 0 && i % width < height - 1){}
-        else if (i % width = height - 1){}
-    }
+    img_t *input_ext = extend(input);
+    //TODO write convolution code
+    goto free;
 dim_5:
-    img_t *input_ext5 = extend(extend(input));
-
+    img_t *input_ext3 = extend(input)
+    img_t *input_ext = extend(input_ext3);
+    free(input_ext3->data);
+    free(input_ext3);
+    //TODO write convolution code
+    goto free;
+free:
+    free(input_ext->data);
+    free(input_ext);
 }
