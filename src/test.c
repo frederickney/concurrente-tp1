@@ -2,6 +2,7 @@
 
 #include "utils.h"
 #include "filters.h"
+#include "convolution.h"
 
 Test(conv_filter, filter_get) {
   float kernel[] = {
@@ -19,7 +20,7 @@ Test(conv_filter, filter_get) {
       "Get element row=0, column=1, expected to be 1.0.");
 
   cr_assert_eq(filter_get(&filter, 2, 0), 6.0,
-      "Get element row=2, column=0, expected to be 2.0.");
+      "Get element row=2, column=0, expected to be 6.0.");
 }
 
 Test(conv_utils, parse_int) {
@@ -41,4 +42,18 @@ Test(conv_utils, parse_int) {
   state = parse_int(&value, "12");
   cr_assert(state);
   cr_assert_eq(value, 12);
+}
+
+Test(con_convolution, clamp) {
+  int result;
+
+  result = clamp(12, 0, 100);
+  cr_assert_eq(result, 12);
+
+  result = clamp(-1, 0, 100);
+  cr_assert_eq(result, 0);
+
+  result = clamp(104, 0, 100);
+  cr_assert_eq(result, 100);
+
 }
