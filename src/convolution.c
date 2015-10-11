@@ -70,13 +70,13 @@ void convolution(img_t *output, const img_t *input, const filter_t *filter, int 
       thread_data[i].output = output;
 		}
 		if (pthread_create(&threads[i], NULL, thread, (void *) &thread_data[i]) != 0) {
-			printf("Thread creation error");
+			perror("Thread creation error");
 			exit(0);
 		}
   }
   for (int i = 0; i < NUM_THREADS; i++)
     if (pthread_join(threads[i] , NULL) != 0) {
-      printf("Thread join error");
+      perror("Thread join error");
       exit(1);
     }
 }
