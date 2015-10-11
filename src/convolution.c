@@ -8,6 +8,7 @@
 #include "../lib/ppm.h"
 #include <pthread.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 void *thread(void *argv)
 {
@@ -40,6 +41,7 @@ void *thread(void *argv)
       data->output->data[address].b = (uint8_t) clamp(b, 0, 255);
     }
 	}
+	return NULL;
 }
 
 void convolution(img_t *output, const img_t *input, const filter_t *filter, int NUM_THREADS)
@@ -67,7 +69,14 @@ void convolution(img_t *output, const img_t *input, const filter_t *filter, int 
       thread_data[i].input = input;
       thread_data[i].output = output;
 		}
-		if (pthread_create(&threads[i], NULL, thread, (void *) &thread_data[i]) != 0)
+		if (pthread_create(&threads[i], NULL, thread, (void *) &thread_data[i]) != 0) {
 			printf("Thread creation error");
+			exit(0);
+		}
   }
+  for (int i = 0; i < NUM_THREADS; i++)
+    if (pthread_join(threads[i] , NULL) != 0) {
+      printf("Thread join error");
+      exit(1);
+    }
 }
