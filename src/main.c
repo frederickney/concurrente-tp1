@@ -98,6 +98,10 @@ int main (int argc, char **argv)
 
   // Load the input PPM file into memory
   input_img = load_ppm(input_filename);
+  if (input_img == NULL) {
+    printf("ERROR: The input file is not a valid PPM P3 file.\n");
+    return EXIT_FAILURE;
+  }
 
   // Allocate memory for the output file
   output_img = alloc_img(input_img->width, input_img->height);
