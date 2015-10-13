@@ -11,7 +11,7 @@
 
 #include "filters.h"
 
-#define clamp(x , min , max) (((min) < (x)) ? (((x) < (max)) ? (x) : (max)) : (min))
+#define clamp(x, min, max) (((min) < (x)) ? (((x) < (max)) ? (x) : (max)) : (min))
 
 typedef struct {
   int begin, end;
@@ -20,6 +20,12 @@ typedef struct {
   img_t *output;
 } data_t;
 
-void convolution (img_t *output, const img_t *input, const filter_t *filter , int NUM_THREADS);
-void threads (void * argv);
+void convolution (
+  img_t *const output,
+  const img_t *const input,
+  const filter_t *const filter,
+  const int num_threads
+);
+
+void *thread (void *args);
 #endif // CONVOLUTION_H
