@@ -19,10 +19,6 @@ const char *USAGE =
   "usage:\n"
   "%s <filter> <thread number> <input file> <output file>\n";
 
-const char *AVAILABLE_FILTERS =
-  "  Available filters:\n"
-  "   - identity\n";
-
 /**
  * Display the usage header and the list of available filters
  *
@@ -31,7 +27,8 @@ const char *AVAILABLE_FILTERS =
 void display_usage (char *cmd_name)
 {
   printf(USAGE, cmd_name);
-  printf("\n%s", AVAILABLE_FILTERS);
+  printf("  Available filters:\n");
+  filters_display("   - %s\n");
 }
 
 /**
@@ -71,7 +68,7 @@ int main (int argc, char **argv)
   filter = filters_get_by_name(filter_name);
   if (filter == NULL) {
     printf("ERROR: Filter '%s' is not available.\n", filter_name);
-    printf("\n%s", AVAILABLE_FILTERS);
+    filters_display("   - %s\n");
     return EXIT_FAILURE;
   }
 
