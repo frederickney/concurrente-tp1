@@ -1,6 +1,6 @@
 include Makefile.inc
 
-CFLAGS=-Wall -pedantic -std=c11
+CFLAGS=-Wall -pedantic -std=c11 -D_POSIX_C_SOURCE=199309L
 LDFLAGS=-lrt -lpthread
 EXE=conv
 OBJ=src/convolution.o src/filters.o src/utils.o lib/ppm.o

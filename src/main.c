@@ -2,6 +2,7 @@
  * @brief Main function and CLI utilities
 \****************************************************************************/
 
+#include <time.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -50,6 +51,9 @@ int main (int argc, char **argv)
 
   img_t *input_img;
   img_t *output_img;
+
+  struct timespec start, finish;
+  double elapsed_ms;
 
   // Check the number of arguments
   if (argc != 5) {
@@ -106,8 +110,21 @@ int main (int argc, char **argv)
   // Allocate memory for the output file
   output_img = alloc_img(input_img->width, input_img->height);
 
+  // Get start time
+  clock_gettime(CLOCK_MONOTONIC, &start);
+
   // Produce the output file by applying the specified filter on the input file
   convolution(output_img, input_img, filter, threads);
+
+  // Get end time
+  clock_gettime(CLOCK_MONOTONIC, &finish);
+
+  // Computed elapsed time in ms
+  elapsed_ms = 1000 * (finish.tv_sec - start.tv_sec);
+  elapsed_ms += (finish.tv_nsec - start.tv_nsec) / 1000000.0;
+
+  // Display elapsed time
+  printf("convolution time: %fms\n", elapsed_ms);
 
   // Write the output file to the file system
   write_ppm(output_filename, output_img);
