@@ -6,9 +6,21 @@
 // Allocate the memory for an image of size width*height
 img_t *alloc_img(int width, int height) {
 	img_t *img = malloc(sizeof(img_t));
+
+	if (img == NULL) {
+		perror("malloc fails");
+		exit(EXIT_FAILURE);
+	}
+
 	img->width = width;
 	img->height = height;
 	img->data = malloc(sizeof(pixel_t) * width * height);	
+
+	if (img->data == NULL) {
+		perror("malloc fails");
+		exit(EXIT_FAILURE);
+	}
+
 	return img;
 }
 
@@ -63,7 +75,7 @@ img_t *load_ppm(char *filename) {
 	img_t *img = alloc_img(width, height);
 	
 	// Next, should be the image data in RGB order
-	for (int i = 0; i < width * height; i++) {
+	for (unsigned i = 0; i < width * height; i++) {
 		unsigned r, g, b;
 		matches = fscanf(f, "%u %u %u", &r, &g, &b);
 		if (matches != 3) goto error;
