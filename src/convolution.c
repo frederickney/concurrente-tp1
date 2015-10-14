@@ -27,7 +27,7 @@ void *thread(void *args)
       for (int xk = -half_dim; xk <= half_dim; xk++) {
         for (int yk = -half_dim; yk <= half_dim; yk++) {
           coef = filter_get(data->filter, half_dim + xk, half_dim + yk);
-          neighbor = width * clamp(y + yk, 0 , height) + clamp(x + xk, 0, width);
+          neighbor = width * clamp(y + yk, 0, height - 1) + clamp(x + xk, 0, width - 1);
           r += coef * data->input->data[neighbor].r;
           g += coef * data->input->data[neighbor].g;
           b += coef * data->input->data[neighbor].b;
