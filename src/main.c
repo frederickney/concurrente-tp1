@@ -14,13 +14,18 @@
 #include "filters.h"
 #include "convolution.h"
 
-
+/**
+ * @brief Usage message.
+ *
+ * Must be used as an printf format string with the program
+ * name 
+ */
 const char *USAGE =
   "usage:\n"
   "%s <filter> <thread number> <input file> <output file>\n";
 
 /**
- * Display the usage header and the list of available filters
+ * @brief Display the usage header and the list of available filters
  *
  * @param cmd_name  The executable name
  */
@@ -32,10 +37,11 @@ void display_usage (char *cmd_name)
 }
 
 /**
- *
+ * @brief Program entry point.
  */
 int main (int argc, char **argv)
 {
+  // Arguments 
   char *cmd_name = argv[0];
   char *filter_name;
   char *threads_arg;
@@ -46,9 +52,11 @@ int main (int argc, char **argv)
 
   int threads;
 
+  // Images
   img_t *input_img;
   img_t *output_img;
 
+  // Timing vars
   struct timespec start, finish;
   double elapsed_ms;
 
@@ -76,13 +84,13 @@ int main (int argc, char **argv)
   // of threads
   if (strcmp(threads_arg, "auto") == 0) {
     threads = sys_get_cpu_count();
-    printf("info: %d threads\n", threads);
   // Otherwise try to parse the string to get a positive integer
   } else if (!parse_int(&threads, threads_arg) || threads < 1) {
     printf("ERROR: <thread number> must be a strictly positive integer "
            "or 'auto'.\n");
     return EXIT_FAILURE;
   }
+  printf("info: %d threads\n", threads);
 
   // Ensure that the input file and the output file are separate files
   if (strcmp(input_filename, output_filename) == 0) {
@@ -110,7 +118,7 @@ int main (int argc, char **argv)
   // Get start time
   clock_gettime(CLOCK_MONOTONIC, &start);
 
-  // Produce the output file by applying the specified filter on the input file
+  // Produce the output image by applying the specified filter on the input image
   convolution(output_img, input_img, filter, threads);
 
   // Get end time
