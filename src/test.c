@@ -1,5 +1,7 @@
 #include <criterion/criterion.h>
 
+#include <pthread.h>
+
 #include "utils.h"
 #include "filters.h"
 #include "convolution.h"
@@ -55,5 +57,50 @@ Test(conv_convolution, clamp) {
 
   result = clamp(104, 0, 100);
   cr_assert_eq(result, 100);
+}
 
+Test(conv_convolution, thread) {
+  const int WIDTH = 10, HEIGHT = 10;
+  const filter_t *filter;
+  img_t *input, *output;
+  pthread_t mythread;
+
+  data_t payload;
+
+  int address;
+
+  input = alloc_img(WIDTH, HEIGHT);
+  output = alloc_img(WIDTH, HEIGHT);
+
+  for (int x = 0; x < WIDTH; x++) {
+    for (int y = 0; y < HEIGHT; y++) {
+      address = x * WIDTH + y;
+      input->data[address].r = address;
+      input->data[address].g = address;
+      input->data[address].b = address;
+    }
+  }
+
+  filter = filters_get_by_name("identity");
+
+  payload.begin = 0;
+  payload.end = HEIGHT;
+  payload.filter = filter;
+  payload.input = input;
+  payload.output = output;
+
+  pthread_create(&mythread, NULL, thread, (void *) &payload);
+  pthread_join(mythread, NULL);
+
+  for (int x = 0; x < WIDTH; x++) {
+    for (int y = 0; y < HEIGHT; y++) {
+      address = x * WIDTH + y;
+      cr_assert_eq(output->data[address].r, input->data[address].r);
+      cr_assert_eq(output->data[address].g, input->data[address].g);
+      cr_assert_eq(output->data[address].b, input->data[address].b);
+    }
+  }
+
+  free_img(input);
+  free_img(output);
 }
