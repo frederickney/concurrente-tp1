@@ -14,11 +14,11 @@ release: CFLAGS += -O3
 release: $(EXE)
 	
 $(EXE): src/main.o $(OBJ)
-	$(CC) $(LDFLAGS) -o $@ $^
+	$(CC) -o $@ $^ $(LDFLAGS)
 
 test: LDFLAGS += -lcriterion
 test: src/test.o $(OBJ)
-	$(CC) $(LDFLAGS) -o $@ $^
+	$(CC) -o $@ $^ $(LDFLAGS)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -o $@ -c $<
